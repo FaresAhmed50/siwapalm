@@ -9,6 +9,7 @@ import { ArrowRight, Search } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import SharedHeader from "@/components/ui/shared-header"
 
 export default function ProductsClient() {
   const t = useTranslations("Products")
@@ -49,6 +50,8 @@ export default function ProductsClient() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50/30">
+      <SharedHeader />
+      
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-red-900/90 -z-10" />

@@ -1,15 +1,24 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
-import { ChevronDown, Menu, X, Instagram, Facebook, Twitter } from "lucide-react"
+import { motion, useAnimation } from "framer-motion"
+import { ChevronDown, Menu, X, Instagram, Facebook, Twitter, Phone, Mail } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules"
+import { useInView } from "react-intersection-observer"
+
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
+import "swiper/css/effect-fade"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import LanguageSwitcher from "@/components/language-switcher"
+import SharedHeader from "@/components/ui/shared-header"
 
 export default function HomeClient() {
   const t = useTranslations("Home")
@@ -57,142 +66,28 @@ export default function HomeClient() {
 
   return (
     <div dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen bg-stone-50 overflow-hidden">
-      {/* النافذة العائمة للتنقل */}
-      <div
-        className={cn(
-          "fixed top-6 right-6 left-6 z-50 transition-all duration-500 rounded-2xl shadow-lg backdrop-blur-md",
-          scrollY > 100 ? "bg-white/90" : "bg-transparent",
-        )}
-      >
-        <div className="flex items-center justify-between p-4">
-          {/* Social media icons and contact info */}
-          <div className="flex items-center gap-4">
-            <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Facebook className="h-5 w-5" />
-            </a>
-            <a href="#" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href="#" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Twitter className="h-5 w-5" />
-            </a>
-            <span className={cn("hidden md:inline transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              info@siwapalm.com
-            </span>
-            <span className={cn("hidden md:inline transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              +20 123 456 7890
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 order-first">
-            <Image
-              src="/siwa-palm-logo.png"
-              alt={t("logoAlt")}
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
-            <span
-              className={cn("font-bold text-xl transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}
-            >
-              {locale === "en" ? "Siwa Palm" : "سيوه بالم"}
-            </span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-8">
-            <NavLink active={true} scrolled={scrollY > 100} href={`/${locale}`}>
-              {t("nav.home")}
-            </NavLink>
-            <NavLink scrolled={scrollY > 100} href={`/${locale}/products`}>
-              {t("nav.products")}
-            </NavLink>
-            <NavLink scrolled={scrollY > 100} href={`/${locale}/about`}>
-              {t("nav.about")}
-            </NavLink>
-            <NavLink scrolled={scrollY > 100} href={`/${locale}/contact`}>
-              {t("nav.contact")}
-            </NavLink>
-            <NavLink scrolled={scrollY > 100} href={`/${locale}/gallery`}>
-              {t("nav.gallery")}
-            </NavLink>
-            <LanguageSwitcher scrolled={scrollY > 100} />
-          </div>
-
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
-            <Menu className={scrollY > 100 ? "text-green-900" : "text-white"} />
-          </Button>
-        </div>
-      </div>
-
-      {/* القائمة المتحركة للجوال */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-green-900 z-50 flex flex-col p-6">
-          <div className="flex justify-between items-center mb-12">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/siwa-palm-logo.png"
-                alt={t("logoAlt")}
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-              <span className="font-bold text-xl text-white">{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</span>
-            </div>
-            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
-              <X className="text-white" />
-            </Button>
-          </div>
-
-          <div className="flex flex-col gap-8 text-white text-2xl">
-            <Link href={`/${locale}`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
-              {t("nav.home")}
-            </Link>
-            <Link href={`/${locale}/products`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
-              {t("nav.products")}
-            </Link>
-            <Link href={`/${locale}/about`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
-              {t("nav.about")}
-            </Link>
-            <Link href={`/${locale}/contact`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
-              {t("nav.contact")}
-            </Link>
-            <Link href={`/${locale}/gallery`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
-              {t("nav.gallery")}
-            </Link>
-            <LanguageSwitcher isMobile={true} />
-          </div>
-
-          <div className="mt-auto">
-            <Button className="w-full bg-white text-green-900 hover:bg-green-100">{t("viewProduct")}</Button>
-          </div>
-        </div>
-      )}
-
-      {/* قسم الصفحة الرئيسية */}
-      <section className="relative h-screen overflow-hidden">
-        {/* خلفية متحركة */}
+      <SharedHeader />
+      
+      {/* Hero Section */}
+      <section className="h-screen min-h-[700px] relative bg-black flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center z-0"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704914/IMG-20250304-WA0048_-_Digital_Marketing_fl7ire.jpg')",
+            backgroundImage: "url(https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704911/IMG-20250304-WA0025_-_Digital_Marketing_vqnpgm.jpg)",
             transform: `translateY(${parallaxOffset}px)`,
+            opacity: 0.5,
           }}
         />
 
-        {/* طبقة التعتيم */}
-        <div className="absolute inset-0 bg-gradient-to-b from-green-950/70 to-green-900/90 z-10" />
-
-        {/* المحتوى */}
-        <div className="relative z-20 container mx-auto h-full flex flex-col justify-center items-center text-center px-4">
+        <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
               <span className="block">{t("hero.title1")}</span>
-              <span className="text-green-300">{t("hero.title2")}</span>
+              <span className="block">{t("hero.title2")}</span>
             </h1>
             <p className="text-lg md:text-xl text-white/80 mb-8">{t("hero.subtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -208,16 +103,22 @@ export default function HomeClient() {
               </Link>
             </div>
           </motion.div>
+        </div>
 
-          <div className="absolute bottom-12 left-0 right-0 flex justify-center">
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Number.POSITIVE_INFINITY, duration: 1.5 }}>
-              <ChevronDown className="text-white w-10 h-10 opacity-70" />
-            </motion.div>
-          </div>
+        <div className="absolute bottom-10 left-0 right-0 text-center">
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, y: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-white"
+            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
+          >
+            <ChevronDown className="h-8 w-8" />
+          </motion.button>
         </div>
       </section>
 
-      {/* قسم المنتجات */}
+      {/* Products Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-green-900/20 to-transparent z-10" />
 
@@ -293,7 +194,7 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* قسم عن الشركة */}
+      {/* عن الشركة */}
       <section className="py-20 bg-green-50">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
@@ -340,7 +241,7 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* قسم معرض الصور */}
+      {/* معرض الصور */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -405,7 +306,7 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* قسم الاتصال */}
+      {/* الاتصال */}
       <section className="py-20 bg-green-900 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">

@@ -9,8 +9,9 @@ import { ArrowLeft, Minus, Plus, ShoppingCart } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import OrderForm from "@/components/order-form"
+import SharedHeader from "@/components/ui/shared-header"
 
-export default function ProductDetailClient({ slug }) {
+export default function ProductDetailClient({ slug }: { slug: string }) {
   const t = useTranslations("ProductDetail")
   const router = useRouter()
 
@@ -70,6 +71,8 @@ export default function ProductDetailClient({ slug }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50/30 pb-16">
+      <SharedHeader />
+      
       {/* Back Button */}
       <div className="container mx-auto px-4 pt-8">
         <Button

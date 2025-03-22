@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import SharedHeader from "@/components/ui/shared-header"
 
 type GalleryImage = {
   id: number
@@ -85,8 +86,14 @@ export default function GalleryClient() {
 
   return (
     <div dir={locale === "ar" ? "rtl" : "ltr"} className="min-h-screen bg-stone-50">
+      <SharedHeader />
+      
       {/* Hero Section */}
-      <section className="relative py-20 bg-[#458a5d]">
+      <section className="relative pt-40 pb-20 bg-gradient-to-r from-green-900 to-green-800">
+        <div
+          className="absolute inset-0 bg-[url('/date-pattern.png')] bg-repeat opacity-10 -z-10"
+          style={{ backgroundSize: "200px" }}
+        />
         <div className="container mx-auto px-4">
           <div className="text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">{t("title")}</h1>

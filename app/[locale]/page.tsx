@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server"
 import HomeClient from "@/components/home-client"
-import { locales, defaultLocale } from "@/i18n/config"
+import { locales } from "@/i18n/config"
+import { notFound } from "next/navigation"
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -11,24 +12,13 @@ export default function HomePage({
 }: {
   params: { locale: string };
 }) {
-  try {
-    // Use a fallback if locale is undefined
-    const locale = params?.locale || defaultLocale;
-    
-    // Enable static rendering and validate locale
-    if (!locales.includes(locale)) {
-      // Just use default locale instead of throwing
-      setRequestLocale(defaultLocale);
-      return <HomeClient />;
-    }
-    
-    setRequestLocale(locale);
-    return <HomeClient />;
-  } catch (error) {
-    console.error(`Error in HomePage:`, error);
-    // Fallback to default locale
-    setRequestLocale(defaultLocale);
-    return <HomeClient />;
-  }
+  // Validate if the locale exists in our config
+  const locale = params.locale;
+  if (!locales.includes(locale)) notFound();
+  
+  // Set the locale for this request
+  setRequestLocale(locale);
+  
+  return <HomeClient />;
 }
 
