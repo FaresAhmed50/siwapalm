@@ -1,7 +1,6 @@
 import { setRequestLocale } from "next-intl/server"
 import ProductDetailClient from "@/components/product-detail-client"
 import { locales } from "@/i18n/config"
-import { notFound } from "next/navigation"
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => [
@@ -11,13 +10,10 @@ export function generateStaticParams() {
   ])
 }
 
-export default function ProductDetailPage({ params }: { params: { locale: string; slug: string } }) {
-  // Validate the locale
-  if (!locales.includes(params.locale)) notFound()
-  
+export default function ProductDetailPage({ params: { locale, slug } }) {
   // Enable static rendering
-  setRequestLocale(params.locale)
+  setRequestLocale(locale)
 
-  return <ProductDetailClient slug={params.slug} />
+  return <ProductDetailClient slug={slug} />
 }
 
