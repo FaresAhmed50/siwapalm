@@ -480,7 +480,17 @@ export default function HomeClient() {
   )
 }
 
-function NavLink({ children, active = false, scrolled = false, href }) {
+function NavLink({ 
+  children, 
+  active = false, 
+  scrolled = false, 
+  href 
+}: { 
+  children: React.ReactNode
+  active?: boolean
+  scrolled?: boolean
+  href: string
+}) {
   return (
     <Link
       href={href}

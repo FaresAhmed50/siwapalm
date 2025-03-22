@@ -1,15 +1,19 @@
 import { setRequestLocale } from "next-intl/server"
-import { locales, defaultLocale } from "@/i18n/config"
-import Link from "next/link"
+import { locales } from "@/i18n/config"
 import { getTranslations } from "next-intl/server"
 import AboutClient from "@/components/about-client"
+import { notFound } from "next/navigation"
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({ params }) {
-  const locale = params?.locale || defaultLocale;
+export async function generateMetadata({ params }: { params: { locale: string } }) {
+  const locale = params.locale;
+  
+  // Validate if the locale exists in our config
+  if (!locales.includes(locale)) notFound();
+  
   const t = await getTranslations({ locale, namespace: "Home" })
   
   return {
@@ -22,23 +26,12 @@ export default function AboutPage({
 }: {
   params: { locale: string };
 }) {
-  try {
-    // Use a fallback if locale is undefined
-    const locale = params?.locale || defaultLocale;
-    
-    // Enable static rendering and validate locale
-    if (!locales.includes(locale)) {
-      // Just use default locale instead of throwing
-      setRequestLocale(defaultLocale);
-      return <AboutClient />;
-    } 
-    
-    setRequestLocale(locale);
-    return <AboutClient />;
-  } catch (error) {
-    console.error(`Error in AboutPage:`, error);
-    // Fallback to default locale
-    setRequestLocale(defaultLocale);
-    return <AboutClient />;
-  }
+  // Validate if the locale exists in our config
+  const locale = params.locale;
+  if (!locales.includes(locale)) notFound();
+  
+  // Set the locale for this request
+  setRequestLocale(locale);
+  
+  return <AboutClient />;
 } 
