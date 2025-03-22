@@ -10,7 +10,7 @@ import { ArrowLeft, Minus, Plus, ShoppingCart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import OrderForm from "@/components/order-form"
 
-export default function ProductDetailClient({ slug }) {
+export default function ProductDetailClient({ slug }: { slug: string }) {
   const t = useTranslations("ProductDetail")
   const router = useRouter()
 
@@ -26,7 +26,7 @@ export default function ProductDetailClient({ slug }) {
           description: t("medjool.description"),
           longDescription: t("medjool.longDescription"),
           image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704914/IMG-20250304-WA0048_-_Digital_Marketing_fl7ire.jpg",
-          color: "from-red-700 to-amber-600",
+          color: "from-green-800 to-green-600",
           price: "120",
           unit: t("unit"),
         }
@@ -36,7 +36,7 @@ export default function ProductDetailClient({ slug }) {
           description: t("siwa.description"),
           longDescription: t("siwa.longDescription"),
           image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704912/IMG-20250304-WA0038_-_Digital_Marketing_ttsil5.jpg",
-          color: "from-amber-600 to-amber-500",
+          color: "from-green-700 to-green-500",
           price: "90",
           unit: t("unit"),
         }
@@ -46,7 +46,7 @@ export default function ProductDetailClient({ slug }) {
           description: t("mazaq.description"),
           longDescription: t("mazaq.longDescription"),
           image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704910/IMG-20250304-WA0044_-_Digital_Marketing_uhn6fw.jpg",
-          color: "from-amber-700 to-amber-500",
+          color: "from-green-800 to-green-600",
           price: "100",
           unit: t("unit"),
         }
@@ -69,12 +69,12 @@ export default function ProductDetailClient({ slug }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50/30 pb-16">
+    <div className="min-h-screen bg-gradient-to-br from-stone-50 to-green-50/30 pb-16">
       {/* Back Button */}
       <div className="container mx-auto px-4 pt-8">
         <Button
           variant="ghost"
-          className="text-red-700 hover:text-red-800 hover:bg-red-50"
+          className="text-green-800 hover:text-green-900 hover:bg-green-50"
           onClick={() => router.push("/products")}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
@@ -111,31 +111,31 @@ export default function ProductDetailClient({ slug }) {
             transition={{ duration: 0.6 }}
             className="w-full lg:w-1/2"
           >
-            <h1 className="text-3xl md:text-5xl font-bold text-red-700 mb-4">{product.name}</h1>
-            <p className="text-xl text-amber-800/70 mb-6">{product.description}</p>
+            <h1 className="text-3xl md:text-5xl font-bold text-green-800 mb-4">{product.name}</h1>
+            <p className="text-xl text-green-800/70 mb-6">{product.description}</p>
 
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-md">
-              <p className="text-lg text-amber-800/90 mb-6">{product.longDescription}</p>
+              <p className="text-lg text-green-800/90 mb-6">{product.longDescription}</p>
 
               <div className="flex items-center justify-between mb-6">
-                <div className="text-3xl font-bold text-red-700">
-                  ${product.price} <span className="text-lg font-normal text-amber-800/70">/ {product.unit}</span>
+                <div className="text-3xl font-bold text-green-800">
+                  ${product.price} <span className="text-lg font-normal text-green-800/70">/ {product.unit}</span>
                 </div>
 
                 <div className="flex items-center">
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-l-full border-red-700 text-red-700 hover:bg-red-50"
+                    className="rounded-l-full border-green-800 text-green-800 hover:bg-green-50"
                     onClick={decreaseQuantity}
                   >
                     <Minus className="h-4 w-4" />
                   </Button>
-                  <div className="w-16 text-center font-bold text-red-700">{quantity}</div>
+                  <div className="w-16 text-center font-bold text-green-800">{quantity}</div>
                   <Button
                     variant="outline"
                     size="icon"
-                    className="rounded-r-full border-red-700 text-red-700 hover:bg-red-50"
+                    className="rounded-r-full border-green-800 text-green-800 hover:bg-green-50"
                     onClick={increaseQuantity}
                   >
                     <Plus className="h-4 w-4" />
@@ -144,7 +144,7 @@ export default function ProductDetailClient({ slug }) {
               </div>
 
               <Button
-                className="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-700 hover:to-amber-600 text-white text-lg py-6"
+                className="w-full bg-gradient-to-r from-green-700 to-green-600 hover:from-green-800 hover:to-green-700 text-white text-lg py-6"
                 onClick={() => setShowOrderForm(true)}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
@@ -154,23 +154,23 @@ export default function ProductDetailClient({ slug }) {
 
             {/* Nutritional Info */}
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-md">
-              <h3 className="text-xl font-bold text-red-700 mb-4">{t("nutritionalInfo")}</h3>
+              <h3 className="text-xl font-bold text-green-800 mb-4">{t("nutritionalInfo")}</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white rounded-xl p-4 shadow-sm">
-                  <div className="text-sm text-amber-800/70">{t("calories")}</div>
-                  <div className="text-lg font-bold text-red-700">277 kcal</div>
+                  <div className="text-sm text-green-800/70">{t("calories")}</div>
+                  <div className="text-lg font-bold text-green-800">277 kcal</div>
                 </div>
                 <div className="bg-white rounded-xl p-4 shadow-sm">
-                  <div className="text-sm text-amber-800/70">{t("protein")}</div>
-                  <div className="text-lg font-bold text-red-700">1.8g</div>
+                  <div className="text-sm text-green-800/70">{t("protein")}</div>
+                  <div className="text-lg font-bold text-green-800">1.8g</div>
                 </div>
                 <div className="bg-white rounded-xl p-4 shadow-sm">
-                  <div className="text-sm text-amber-800/70">{t("carbs")}</div>
-                  <div className="text-lg font-bold text-red-700">75g</div>
+                  <div className="text-sm text-green-800/70">{t("carbs")}</div>
+                  <div className="text-lg font-bold text-green-800">75g</div>
                 </div>
                 <div className="bg-white rounded-xl p-4 shadow-sm">
-                  <div className="text-sm text-amber-800/70">{t("fiber")}</div>
-                  <div className="text-lg font-bold text-red-700">6.7g</div>
+                  <div className="text-sm text-green-800/70">{t("fiber")}</div>
+                  <div className="text-lg font-bold text-green-800">6.7g</div>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@ export default function ProductDetailClient({ slug }) {
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
           >
-            <h2 className="text-2xl font-bold text-red-700 mb-6">{t("orderForm.title")}</h2>
+            <h2 className="text-2xl font-bold text-green-800 mb-6">{t("orderForm.title")}</h2>
             <OrderForm productName={product.name} quantity={quantity} onClose={() => setShowOrderForm(false)} />
           </motion.div>
         </div>

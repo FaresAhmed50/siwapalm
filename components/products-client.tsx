@@ -20,7 +20,7 @@ export default function ProductsClient() {
       name: t("medjool.name"),
       description: t("medjool.description"),
       image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704914/IMG-20250304-WA0048_-_Digital_Marketing_fl7ire.jpg",
-      color: "from-red-700 to-amber-600",
+      color: "from-green-800 to-green-600",
       slug: "medjool",
     },
     {
@@ -28,7 +28,7 @@ export default function ProductsClient() {
       name: t("siwa.name"),
       description: t("siwa.description"),
       image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704912/IMG-20250304-WA0038_-_Digital_Marketing_ttsil5.jpg",
-      color: "from-amber-600 to-amber-500",
+      color: "from-green-700 to-green-500",
       slug: "siwa",
     },
     {
@@ -36,7 +36,7 @@ export default function ProductsClient() {
       name: t("mazaq.name"),
       description: t("mazaq.description"),
       image: "https://res.cloudinary.com/dduxyvs3x/image/upload/v1741704910/IMG-20250304-WA0044_-_Digital_Marketing_uhn6fw.jpg",
-      color: "from-amber-700 to-amber-500",
+      color: "from-green-800 to-green-600",
       slug: "mazaq",
     },
   ]
@@ -48,10 +48,10 @@ export default function ProductsClient() {
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 to-amber-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-stone-50 to-green-50/30">
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-red-900/90 -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-green-800/90 -z-10" />
         <div
           className="absolute inset-0 bg-[url('/date-pattern.png')] bg-repeat opacity-10 -z-10"
           style={{ backgroundSize: "200px" }}
@@ -74,7 +74,7 @@ export default function ProductsClient() {
                 placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 py-6 rounded-full bg-white/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/60 focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+                className="pl-10 py-6 rounded-full bg-white/20 backdrop-blur-sm border-white/30 text-white placeholder:text-white/60 focus:ring-2 focus:ring-green-400 focus:border-transparent"
               />
             </div>
           </motion.div>
@@ -101,10 +101,10 @@ export default function ProductsClient() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-red-700 mb-2">{product.name}</h3>
-                <p className="text-amber-800/70 mb-6">{product.description}</p>
+                <h3 className="text-2xl font-bold text-green-800 mb-2">{product.name}</h3>
+                <p className="text-green-800/70 mb-6">{product.description}</p>
                 <Link href={`/products/${product.slug}`}>
-                  <Button className="w-full bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-700 hover:to-amber-600 text-white">
+                  <Button className="w-full bg-gradient-to-r from-green-700 to-green-600 hover:from-green-800 hover:to-green-700 text-white">
                     {t("viewProduct")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -116,11 +116,11 @@ export default function ProductsClient() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-16">
-            <h3 className="text-2xl font-bold text-red-700 mb-4">{t("noResults")}</h3>
-            <p className="text-amber-800/70 mb-6">{t("tryDifferentSearch")}</p>
+            <h3 className="text-2xl font-bold text-green-800 mb-4">{t("noResults")}</h3>
+            <p className="text-green-800/70 mb-6">{t("tryDifferentSearch")}</p>
             <Button
               variant="outline"
-              className="border-red-700 text-red-700 hover:bg-red-50"
+              className="border-green-800 text-green-800 hover:bg-green-50"
               onClick={() => setSearchQuery("")}
             >
               {t("clearSearch")}
