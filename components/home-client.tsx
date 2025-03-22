@@ -100,13 +100,21 @@ export default function HomeClient() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            <NavLink active={true} scrolled={scrollY > 100}>
+            <NavLink active={true} scrolled={scrollY > 100} href={`/${locale}`}>
               {t("nav.home")}
             </NavLink>
-            <NavLink scrolled={scrollY > 100}>{t("nav.products")}</NavLink>
-            <NavLink scrolled={scrollY > 100}>{t("nav.about")}</NavLink>
-            <NavLink scrolled={scrollY > 100}>{t("nav.contact")}</NavLink>
-            <NavLink scrolled={scrollY > 100}>{t("nav.gallery")}</NavLink>
+            <NavLink scrolled={scrollY > 100} href={`/${locale}/products`}>
+              {t("nav.products")}
+            </NavLink>
+            <NavLink scrolled={scrollY > 100} href={`/${locale}/about`}>
+              {t("nav.about")}
+            </NavLink>
+            <NavLink scrolled={scrollY > 100} href={`/${locale}/contact`}>
+              {t("nav.contact")}
+            </NavLink>
+            <NavLink scrolled={scrollY > 100} href={`/${locale}/gallery`}>
+              {t("nav.gallery")}
+            </NavLink>
             <LanguageSwitcher scrolled={scrollY > 100} />
           </div>
 
@@ -136,19 +144,19 @@ export default function HomeClient() {
           </div>
 
           <div className="flex flex-col gap-8 text-white text-2xl">
-            <Link href="#" className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
+            <Link href={`/${locale}`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
               {t("nav.home")}
             </Link>
-            <Link href="#" className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
+            <Link href={`/${locale}/products`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
               {t("nav.products")}
             </Link>
-            <Link href="#" className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
+            <Link href={`/${locale}/about`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
               {t("nav.about")}
             </Link>
-            <Link href="#" className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
+            <Link href={`/${locale}/contact`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
               {t("nav.contact")}
             </Link>
-            <Link href="#" className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
+            <Link href={`/${locale}/gallery`} className="border-b border-green-700 pb-4 hover:text-green-200 transition-colors">
               {t("nav.gallery")}
             </Link>
             <LanguageSwitcher isMobile={true} />
@@ -188,14 +196,16 @@ export default function HomeClient() {
             </h1>
             <p className="text-lg md:text-xl text-white/80 mb-8">{t("hero.subtitle")}</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="#">
+              <Link href={`/${locale}/products`}>
                 <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8">
                   {t("hero.browseProducts")}
                 </Button>
               </Link>
-              <Button variant="outline" className="border-white text-white hover:bg-white/20 text-lg py-6 px-8">
-                {t("hero.learnMore")}
-              </Button>
+              <Link href={`/${locale}/about`}>
+                <Button variant="outline" className="border-white text-white hover:bg-white/20 text-lg py-6 px-8">
+                  {t("hero.learnMore")}
+                </Button>
+              </Link>
             </div>
           </motion.div>
 
@@ -492,22 +502,22 @@ export default function HomeClient() {
               <h3 className="text-2xl font-bold mb-6">{t("footer.quickLinks")}</h3>
               <ul className="space-y-4">
                 <li>
-                  <Link href="#" className="text-green-100 hover:text-white transition-colors">
+                  <Link href={`/${locale}`} className="text-green-100 hover:text-white transition-colors">
                     {t("nav.home")}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-green-100 hover:text-white transition-colors">
+                  <Link href={`/${locale}/products`} className="text-green-100 hover:text-white transition-colors">
                     {t("nav.products")}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-green-100 hover:text-white transition-colors">
+                  <Link href={`/${locale}/about`} className="text-green-100 hover:text-white transition-colors">
                     {t("nav.about")}
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="text-green-100 hover:text-white transition-colors">
+                  <Link href={`/${locale}/contact`} className="text-green-100 hover:text-white transition-colors">
                     {t("nav.contact")}
                   </Link>
                 </li>
@@ -569,10 +579,10 @@ export default function HomeClient() {
   )
 }
 
-function NavLink({ children, active = false, scrolled = false }) {
+function NavLink({ children, active = false, scrolled = false, href }) {
   return (
     <Link
-      href="#"
+      href={href}
       className={cn(
         "font-medium transition-colors",
         active

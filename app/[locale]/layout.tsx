@@ -28,8 +28,13 @@ export function generateStaticParams() {
 export default async function RootLayout({ children, params: { locale } }) {
   let messages
   try {
+    // Make sure the locale is one of the supported locales
+    if (!locales.includes(locale)) {
+      notFound()
+    }
     messages = (await import(`../../messages/${locale}.json`)).default
   } catch (error) {
+    console.error(`Error loading messages for locale: ${locale}`, error)
     notFound()
   }
 
