@@ -1,14 +1,14 @@
 import { setRequestLocale } from "next-intl/server"
-import { locales } from "@/i18n/config"
+import { locales, defaultLocale } from "@/i18n/config"
 import Link from "next/link"
-import { useTranslations } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({ params: { locale } }) {
+export async function generateMetadata({ params }) {
+  const locale = params?.locale || defaultLocale;
   const t = await getTranslations({ locale, namespace: "Home" })
   
   return {
@@ -16,14 +16,22 @@ export async function generateMetadata({ params: { locale } }) {
   }
 }
 
-export default function ContactPage({ params: { locale } }: { params: { locale: string } }) {
+export default function ContactPage({
+  params,
+}: {
+  params: { locale: string };
+}) {
   try {
+    // Use a fallback if locale is undefined
+    const locale = params?.locale || defaultLocale;
+    
     // Enable static rendering and validate locale
     if (!locales.includes(locale)) {
-      throw new Error(`Unsupported locale: ${locale}`)
+      // Just use default locale instead of throwing
+      setRequestLocale(defaultLocale);
+    } else {
+      setRequestLocale(locale);
     }
-    
-    setRequestLocale(locale)
     
     return (
       <div className="min-h-screen bg-stone-50 py-20">
@@ -114,7 +122,18 @@ export default function ContactPage({ params: { locale } }: { params: { locale: 
       </div>
     )
   } catch (error) {
-    console.error(`Error in ContactPage for locale ${locale}:`, error)
-    return <div>Error loading contact page. Please try again later.</div>
+    console.error(`Error in ContactPage:`, error);
+    // Fallback to default locale
+    setRequestLocale(defaultLocale);
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-500 mb-4">Error loading contact page</h1>
+          <Link href={`/${defaultLocale}`} className="text-blue-500 hover:underline">
+            Return to Home
+          </Link>
+        </div>
+      </div>
+    );
   }
 } 
