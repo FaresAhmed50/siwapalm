@@ -65,26 +65,7 @@ export default function HomeClient() {
         )}
       >
         <div className="flex items-center justify-between p-4">
-          {/* Social media icons and contact info */}
-          <div className="flex items-center gap-4">
-            <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Facebook className="h-5 w-5" />
-            </a>
-            <a href="#" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href="#" target="_blank" className={cn("transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              <Twitter className="h-5 w-5" />
-            </a>
-            <span className={cn("hidden md:inline transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              info@siwapalm.com
-            </span>
-            <span className={cn("hidden md:inline transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}>
-              +20 123 456 7890
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 order-first">
+          <div className="flex items-center gap-2">
             <Image
               src="/siwa-palm-logo.png"
               alt={t("logoAlt")}
