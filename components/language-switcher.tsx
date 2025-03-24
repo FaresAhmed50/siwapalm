@@ -25,15 +25,15 @@ export default function LanguageSwitcher({ scrolled = false, isMobile = false })
     return (
       <div className="flex justify-center gap-4">
         <Button
-          variant={locale === "en" ? "default" : "outline"}
-          className={cn(locale === "en" ? "bg-white text-green-700" : "border-white text-white", "flex-1")}
+          variant={locale === "en" ? "outline" : "outline"}
+          className={cn(locale === "en" ? "border-white bg-white text-black hover:bg-white/20 text-lg py-6 px-8" : "border-white text-black hover:bg-white/20 text-lg py-6 px-8", "flex-1")}
           onClick={() => switchLocale("en")}
         >
           English
         </Button>
         <Button
-          variant={locale === "ar" ? "default" : "outline"}
-          className={cn(locale === "ar" ? "bg-white text-green-700" : "border-white text-white", "flex-1")}
+          variant={locale === "ar" ? "outline" : "outline"}
+          className={cn(locale === "ar" ? "border-white bg-white text-black hover:bg-white/20 text-lg py-6 px-8" : "border-white text-black hover:bg-white/20 text-lg py-6 px-8", "flex-1")}
           onClick={() => switchLocale("ar")}
         >
           العربية
@@ -48,7 +48,7 @@ export default function LanguageSwitcher({ scrolled = false, isMobile = false })
         <Button 
           variant="ghost" 
           className={cn(
-            scrolled ? "text-green-700" : "text-white",
+            scrolled ? "text-green-700" : "text-black",
             "font-medium"
           )}
         >
