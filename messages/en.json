@@ -158,6 +158,14 @@
     }
   },
   "ProductDetail": {
+    "logoAlt": "Siwa Palm Logo",
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "about": "About",
+      "contact": "Contact",
+      "gallery": "Gallery"
+    },
     "backToProducts": "Back to Products",
     "nutritionalInfo": "Nutritional Information",
     "calories": "Calories",
@@ -183,6 +191,33 @@
     },
     "orderForm": {
       "title": "Place Your Order"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "subtitle": "We are here to answer your inquiries and fulfill your orders for our premium products",
+      "info": {
+        "title": "Contact Information",
+        "address": "Siwa Oasis, Matrouh, Egypt"
+      },
+      "followUs": "Follow Us",
+      "form": {
+        "title": "Send a Message",
+        "name": "Name",
+        "email": "Email",
+        "message": "Your Message",
+        "send": "Send"
+      }
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "about": "Siwa Palm is a leading company in growing and producing the finest dates since 2001, offering an exceptional tasting experience from the heart of the Egyptian desert.",
+      "quickLinks": "Quick Links",
+      "contactUs": "Contact Information",
+      "sendMessage": "Send a Message",
+      "name": "Name",
+      "email": "Email",
+      "message": "Your Message",
+      "copyright": "All rights reserved"
     }
   },
   "OrderForm": {

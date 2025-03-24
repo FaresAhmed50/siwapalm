@@ -7,6 +7,7 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
 
+// @ts-ignore
 export async function generateMetadata({ params }) {
   const locale = params?.locale || defaultLocale;
   const t = await getTranslations({ locale, namespace: "Home" })

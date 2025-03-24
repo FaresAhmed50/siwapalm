@@ -587,6 +587,7 @@ export default function HomeClient() {
   )
 }
 
+// @ts-ignore
 function NavLink({ children, active = false, scrolled = false, href }) {
   return (
     <Link

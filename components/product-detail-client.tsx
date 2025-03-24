@@ -5,7 +5,7 @@ import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import {useLocale, useTranslations} from "next-intl"
-import {ArrowLeft, Facebook, Instagram, Minus, Plus, ShoppingCart, Twitter} from "lucide-react"
+import {ArrowLeft, ArrowRight, Facebook, Instagram, Minus, Plus, ShoppingCart, Twitter} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import OrderForm from "@/components/order-form"
@@ -18,6 +18,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
   const t = useTranslations("ProductDetail")
   const router = useRouter()
   const locale = useLocale()
+  const [scrollY, setScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [showOrderForm, setShowOrderForm] = useState(false)
@@ -184,13 +185,17 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
 
 
 
-      <div className="container mx-auto px-4 pt-16">
+      <div className="container mx-auto px-4 pt-24">
         <Button
           variant="ghost"
-          className="text-green-800 hover:text-green-900 hover:bg-green-50"
+          className="text-green-800 hover:text-green-900 hover:bg-green-50 "
           onClick={() => router.push("/products")}
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          {locale === "en" ? (
+              <ArrowLeft className="mr-2 h-4 w-4" />
+          ) : (
+              <ArrowRight className="mr-2 h-4 w-4" />
+          )}
           {t("backToProducts")}
         </Button>
       </div>
