@@ -1,6 +1,5 @@
 import { setRequestLocale } from "next-intl/server"
 import { locales, defaultLocale } from "@/i18n/config"
-import Link from "next/link"
 import { getTranslations } from "next-intl/server"
 import ContactClient from "@/components/contact-client";
 
@@ -19,11 +18,8 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default function ContactPage({
-  params,
-}: {
-  params: { locale: string };
-}) {
+export default function ContactPage({params,}: { params: { locale: string }; }) {
+
   try {
     // Use a fallback if locale is undefined
     const locale = params?.locale || defaultLocale;
@@ -44,4 +40,5 @@ export default function ContactPage({
     setRequestLocale(defaultLocale);
     return <ContactClient />
   }
+
 }
