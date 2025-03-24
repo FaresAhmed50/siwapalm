@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
-export default function OrderForm({ productName, quantity, onClose }) {
+export default function OrderForm({ productName , quantity, onClose }) {
   const t = useTranslations("OrderForm")
+
   const [formState, setFormState] = useState({
     name: "",
     company: "",
@@ -26,7 +27,7 @@ export default function OrderForm({ productName, quantity, onClose }) {
   const [isSuccess, setIsSuccess] = useState(false)
   const [errors, setErrors] = useState({})
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
     setFormState((prev) => ({
       ...prev,
@@ -35,7 +36,14 @@ export default function OrderForm({ productName, quantity, onClose }) {
   }
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors = {
+      name : "",
+      company: "",
+      location: "",
+      email: "",
+      phone: "",
+      amount: "",
+    }
 
     if (!formState.name.trim()) newErrors.name = t("errors.nameRequired")
     if (!formState.company.trim()) newErrors.company = t("errors.companyRequired")
@@ -53,7 +61,7 @@ export default function OrderForm({ productName, quantity, onClose }) {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
     if (!validateForm()) return
