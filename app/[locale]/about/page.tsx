@@ -2,6 +2,10 @@ import { setRequestLocale } from "next-intl/server"
 import { locales, defaultLocale } from "@/i18n/config"
 import Link from "next/link"
 import { getTranslations } from "next-intl/server"
+import {cn} from "@/lib/utils";
+import Image from "next/image";
+import LanguageSwitcher from "@/components/language-switcher";
+import {Button} from "@/components/ui/button";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -36,6 +40,7 @@ export default function AboutPage({
     
     return (
       <div className="min-h-screen bg-stone-50 py-20">
+
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-6xl font-bold text-green-900 mb-8 text-center">
             About Siwa Palm

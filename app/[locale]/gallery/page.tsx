@@ -21,7 +21,6 @@ export default function GalleryPage({
       setRequestLocale(defaultLocale);
       return <GalleryClient />;
     }
-    
     setRequestLocale(locale);
     return <GalleryClient />;
   } catch (error) {
