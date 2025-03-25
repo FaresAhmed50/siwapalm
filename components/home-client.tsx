@@ -6,10 +6,11 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown, Menu, X, Instagram, Facebook, Twitter } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
-
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import LanguageSwitcher from "@/components/language-switcher"
+
+
 
 export default function HomeClient() {
   const t = useTranslations("Home")
@@ -19,12 +20,13 @@ export default function HomeClient() {
   const [activeProduct, setActiveProduct] = useState(0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const interval = setInterval(() => {
+      setActiveProduct((prev) => (prev + 1) % products.length); // Cycle through products
+    }, 5000); // Change product every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
+
 
   const products = [
     {
@@ -66,25 +68,26 @@ export default function HomeClient() {
       >
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
-            <Image
+            <Image style={{ contentVisibility: 'auto' }}
               src="/siwa-palm-logo.png"
               alt={t("logoAlt")}
               width={40}
               height={40}
               className="rounded-full"
             />
-            <span
+            <h2
               className={cn("font-bold text-xl transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}
+              style={{ contentVisibility: 'auto' }}
             >
               {locale === "en" ? "Siwa Palm" : "سيوه بالم"}
-            </span>
+            </h2>
           </div>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8  ">
             <NavLink active={true} scrolled={scrollY > 100} href={`/${locale}`}>
               {t("nav.home")}
             </NavLink>
-            <NavLink scrolled={scrollY > 100} href={`/${locale}/products`}>
+            <NavLink  scrolled={scrollY > 100} href={`/${locale}/products`}>
               {t("nav.products")}
             </NavLink>
             <NavLink scrolled={scrollY > 100} href={`/${locale}/about`}>
@@ -99,19 +102,25 @@ export default function HomeClient() {
             <LanguageSwitcher scrolled={scrollY > 100} />
           </div>
 
-          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(true)}>
-            <Menu className={scrollY > 100 ? "text-green-900" : "text-white"} />
+          <Button className={`${scrollY > 100 ? "text-green-900" : "text-black"} hover:text-black md:hidden` } variant="ghost" size="icon"  onClick={() => setMobileMenuOpen(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                 className="lucide lucide-menu">
+              <line x1="4" x2="20" y1="12" y2="12"/>
+              <line x1="4" x2="20" y1="6" y2="6"/>
+              <line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
           </Button>
         </div>
       </div>
 
       {/* القائمة المتحركة للجوال */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 bg-green-900 z-50 flex flex-col p-6">
-          <div className="flex justify-between items-center mb-12">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/siwa-palm-logo.png"
+          <div className="fixed inset-0 bg-green-900 z-50 flex flex-col p-6">
+            <div className="flex justify-between items-center mb-12">
+              <div className="flex items-center gap-2">
+                <Image
+                    src="/siwa-palm-logo.png"
                 alt={t("logoAlt")}
                 width={40}
                 height={40}
@@ -119,8 +128,14 @@ export default function HomeClient() {
               />
               <span className="font-bold text-xl text-white">{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</span>
             </div>
-            <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
-              <X className="text-white" />
+            <Button className="text-white  hover:text-black hover:scale-110 transition-all duration-300"
+                    variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                   className="lucide lucide-x">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+              </svg>
             </Button>
           </div>
 
@@ -144,7 +159,7 @@ export default function HomeClient() {
           </div>
 
           <div className="mt-auto">
-            <Button className="w-full bg-white text-green-900 hover:bg-green-100">{t("viewProduct")}</Button>
+            <Button className="w-full border border-white bg-white  text-black  hover:bg-white/20 text-lg py-6 px-8 ">{t("viewProduct")}</Button>
           </div>
         </div>
       )}
@@ -171,19 +186,19 @@ export default function HomeClient() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{ contentVisibility: 'auto' }}>
               <span className="block">{t("hero.title1")}</span>
               <span className="text-green-300">{t("hero.title2")}</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8">{t("hero.subtitle")}</p>
+            <h2 className="text-lg md:text-xl text-white/80 mb-8"  style={{ contentVisibility: 'auto' }}>{t("hero.subtitle")}</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={`/${locale}/products`}>
-                <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8">
+                <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
                   {t("hero.browseProducts")}
                 </Button>
               </Link>
               <Link href={`/${locale}/about`}>
-              <Button variant="outline" className="border-white text-white hover:bg-white/20 text-lg py-6 px-8">
+              <Button variant="outline" className="border-white text-black hover:text-[#ad0014] hover:bg-white/20 text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
                 {t("hero.learnMore")}
               </Button>
               </Link>
@@ -209,29 +224,27 @@ export default function HomeClient() {
           </div>
 
           {/* عرض المنتجات بطريقة مبتكرة */}
-          <div className="relative h-[600px] md:h-[700px] mb-12">
-            {/* خلفية متحركة للمنتجات */}
-            <div className="absolute inset-0 rounded-3xl bg-green-800" />
-
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_30%,_rgba(0,0,0,0.4)_100%)]" />
+          <div className="relative h-[800px] md:h-[700px] mb-12">
+            <div className="absolute inset-0 rounded-3xl bg-green-800 " />
+            <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_center,_transparent_30%,_rgba(0,0,0,0.4)_100%)]" />
 
             <div className="relative h-full flex flex-col md:flex-row">
-              {/* صورة المنتج */}
-              <div className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-8">
-                <div className="relative w-full h-full max-w-md">
-                  <Image
-                    src={products[activeProduct].image || "/placeholder.svg"}
-                    alt={products[activeProduct].name}
-                    fill
-                    className="object-contain drop-shadow-2xl"
-                  />
-                </div>
-              </div>
 
-              {/* تفاصيل المنتج */}
-              <div className="w-full md:w-1/2 h-1/2 md:h-full flex items-center justify-center p-8">
-                <div className="text-white max-w-lg">
-                  <p className="text-green-100 text-sm uppercase tracking-wider mb-2">
+              <div className="w-full md:w-full h-full  md:h-full flex flex-col md:flex-row items-center justify-center p-8">
+
+                <div className="w-1/2 h-full flex items-start justify-start p-0 md:p-8  ">
+                  <div className="relative w-full h-full ">
+                    <Image
+                        src={products[activeProduct].image || "/placeholder.svg"}
+                        alt={products[activeProduct].name}
+                        fill
+                        className="object-cover md:object-contain drop-shadow-2xl"
+                    />
+                  </div>
+                </div>
+
+                <div className={`text-white max-w-lg   ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}`}>
+                  <p className="text-green-100 text-sm uppercase tracking-wider mb-2 pt-5 md:py-0">
                     {t("products.featured")}
                   </p>
                   <h3 className="text-3xl md:text-5xl font-bold mb-4">{products[activeProduct].name}</h3>
@@ -251,26 +264,36 @@ export default function HomeClient() {
                       <div className="w-2 h-2 rounded-full bg-green-200" />
                       <p>{t("products.feature3")}</p>
                     </div>
+                    <div className={`py-5`}>
+                      <Link href={`/${locale}/products`} className="bg-white text-black  hover:text-[#ad0014] rounded-full px-8 py-3 font-medium">
+                        {t("viewProduct")}
+                      </Link>
+                    </div>
                   </div>
-                  <button className="bg-white text-green-800 hover:bg-green-100 rounded-full px-8 py-3 font-medium">
-                    {t("viewProduct")}
-                  </button>
                 </div>
+
+
               </div>
+
             </div>
 
             {/* نقاط التنقل بين المنتجات (جعلناها ثابتة) */}
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2">
+            <div className="absolute bottom-8 left-0 right-0  justify-center gap-2 hidden md:flex">
               {products.map((product, index) => (
-                <div
-                  key={index}
-                  className={cn("w-3 h-3 rounded-full transition-colors", 
-                    index === activeProduct ? "bg-white" : "bg-white/30"
-                  )}
-                />
+                  <button
+                      key={index}
+                      onClick={() => setActiveProduct(index)} // Update activeProduct on click
+                      className={cn(
+                          "w-3 h-3 rounded-full transition-colors cursor-pointer",
+                          index === activeProduct ? "bg-white" : "bg-white/30"
+                      )}
+                  />
               ))}
             </div>
+
           </div>
+
+
         </div>
       </section>
 
@@ -294,11 +317,11 @@ export default function HomeClient() {
             </div>
 
             <div className="w-full md:w-1/2">
-              <h2 className="text-3xl md:text-5xl font-bold text-green-900 mb-6">{t("about.title")}</h2>
+              <h2 className={`text-3xl md:text-5xl font-bold text-green-900 mb-6 text-center ${locale == 'en' ? "text-center md:text-left" : "text-center md:text-right" } `}>{t("about.title")}</h2>
               <div className="space-y-6 text-lg text-green-800/80">
                 <p>{t("about.paragraph1")}</p>
                 <p>{t("about.paragraph2")}</p>
-                <div className="pt-4 grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div className={`pt-4 grid grid-cols-1 md:grid-cols-3 gap-6 ${locale == "en" ? "text-center md:text-left" : "text-center  md:text-right"}`}>
                   <ValueCard
                     icon="🌴"
                     title={t("about.values.agriculture.title")}
@@ -316,7 +339,29 @@ export default function HomeClient() {
                   />
                 </div>
               </div>
+
+              <div className={`px-2 pt-3 ${locale == "en" ? "flex flex-col justify-center items-center md:justify-start md:items-start" : "flex flex-col justify-center items-center md:justify-start md:items-start"}`}>
+                <div className="flex gap-4 justify-center md:justify-start">
+                  <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                    <Facebook className="h-5 w-5" />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                    <Twitter className="h-5 w-5" />
+                  </a>
+                </div>
+                <div className={`py-7`}>
+                  <Link href={`/${locale}/about`} className={`bg-white  text-black  hover:text-[#ad0014] rounded-full px-8 py-3 font-medium`}>
+                    {t("nav.about")}
+                  </Link>
+                </div>
+              </div>
+
+
             </div>
+
           </div>
         </div>
       </section>
@@ -389,32 +434,33 @@ export default function HomeClient() {
       {/* قسم الاتصال */}
       <section className="py-20 bg-green-900 text-white">
         <div className="container mx-auto px-4">
+
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">{t("contact.title")}</h2>
             <p className="text-lg text-white/70 max-w-2xl mx-auto">{t("contact.subtitle")}</p>
           </div>
 
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors">
-              <h3 className="text-2xl font-bold mb-4">{t("contact.info.title")}</h3>
-              <div className="space-y-4">
-                <p className="flex items-center gap-3">
+            <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors  ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}` }>
+              <h3 className="text-2xl font-bold mb-4 pb-5">{t("contact.info.title")}</h3>
+              <div className={`space-y-4 `}>
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
                   <span className="text-green-300 text-xl">📞</span>
                   <span>+20 123 456 7890</span>
                 </p>
-                <p className="flex items-center gap-3">
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
                   <span className="text-green-300 text-xl">✉️</span>
                   <span>info@siwapalm.com</span>
                 </p>
-                <p className="flex items-center gap-3">
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
                   <span className="text-green-300 text-xl">📍</span>
                   <span>{t("contact.info.address")}</span>
                 </p>
               </div>
 
-              <div className="mt-8">
-                <h4 className="text-xl font-medium mb-4">{t("contact.followUs")}</h4>
-                <div className="flex gap-4">
+              <div className="mt-8 ">
+                <h4 className="text-[24px] font-bold mb-4">{t("contact.followUs")}</h4>
+                <div className={`flex gap-4 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"} ` }>
                   <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
                     <Facebook className="w-5 h-5" />
                   </Button>
@@ -429,7 +475,7 @@ export default function HomeClient() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors">
-              <h3 className="text-2xl font-bold mb-4">{t("contact.form.title")}</h3>
+              <h3 className={`text-2xl font-bold mb-4 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} `}>{t("contact.form.title")}</h3>
               <form className="space-y-4">
                 <div>
                   <input
@@ -462,11 +508,12 @@ export default function HomeClient() {
       {/* القسم السفلي */}
       <section className="bg-green-900 text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div>
-              <h3 className="text-2xl font-bold mb-6">{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</h3>
-              <p className="text-green-100 mb-6">{t("footer.about")}</p>
-              <div className="flex gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10 ">
+
+            <div className="text-center md:text-left">
+              <h3 className={`text-2xl font-bold mb-6   ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} `}>{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</h3>
+              <p className={`text-green-100 mb-6 w-full md:w-[70%] ${locale == 'en' ? "text-center md:text-left" : "text-center md:text-right"} `}>{t("footer.about")}</p>
+              <div className="flex gap-4 justify-center md:justify-start">
                 <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                   <Facebook className="h-5 w-5" />
                 </a>
@@ -479,7 +526,7 @@ export default function HomeClient() {
               </div>
             </div>
 
-            <div>
+            <div className={` text-center  ${locale == "en" ? "text-center" : "text-center"} ${locale == "en" ? "md:text-left" : "md:text-right"}` }>
               <h3 className="text-2xl font-bold mb-6">{t("footer.quickLinks")}</h3>
               <ul className="space-y-4">
                 <li>
@@ -505,49 +552,30 @@ export default function HomeClient() {
               </ul>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-bold mb-6">{t("footer.contactUs")}</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
-                    <span className="text-xl">📍</span>
-                  </div>
-                  <span className="text-green-100">Siwa Oasis, Egypt</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
-                    <span className="text-xl">📞</span>
-                  </div>
-                  <span className="text-green-100">+20 123 456 7890</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
-                    <span className="text-xl">✉️</span>
-                  </div>
-                  <span className="text-green-100">info@siwapalm.com</span>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-2xl font-bold mb-6">{t("footer.sendMessage")}</h3>
-              <form className="space-y-4">
-                <input
-                  type="text"
-                  placeholder={t("footer.name")}
-                  className="w-full px-4 py-2 rounded-lg bg-green-800 placeholder-green-200 text-white border border-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
-                />
-                <input
-                  type="email"
-                  placeholder={t("footer.email")}
-                  className="w-full px-4 py-2 rounded-lg bg-green-800 placeholder-green-200 text-white border border-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
-                />
-                <textarea
-                  rows={3}
-                  placeholder={t("footer.message")}
-                  className="w-full px-4 py-2 rounded-lg bg-green-800 placeholder-green-200 text-white border border-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
-                />
-              </form>
+            <div className={`text-center  ${locale == "en" ? "text-left" : "text-right"}  `}>
+              <h3 className={`text-2xl font-bold mb-6 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}`}>{t("footer.contactUs")}</h3>
+              <div className="flex justify-center md:justify-start">
+                <ul className="space-y-4 ">
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">📍</span>
+                    </div>
+                    <span className="text-green-100">Siwa Oasis, Egypt</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">📞</span>
+                    </div>
+                    <span className="text-green-100">+20 123 456 7890</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">✉️</span>
+                    </div>
+                    <span className="text-green-100">info@siwapalm.com</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -560,19 +588,20 @@ export default function HomeClient() {
   )
 }
 
+// @ts-ignore
 function NavLink({ children, active = false, scrolled = false, href }) {
   return (
     <Link
       href={href}
       className={cn(
-        "font-medium transition-colors",
+        "font-medium transition-colors hover:text-[#ad0014]",
         active
           ? scrolled
             ? "text-green-900"
-            : "text-white"
+            : "text-black"
           : scrolled
-          ? "text-green-700 hover:text-green-900"
-          : "text-white/80 hover:text-white",
+          ? "text-green-700 hover:text-[#ad0014]"
+          : "text-black/80 hover:text-[#ad0014]",
       )}
     >
       {children}
@@ -586,7 +615,7 @@ function ValueCard({ icon, title, description }: {
   description: string
 }) {
   return (
-    <div className="bg-green-100/50 rounded-2xl p-4 hover:bg-green-100 transition-colors">
+    <div className={`bg-green-100/50 rounded-2xl p-4 hover:bg-green-100 transition-colors `}>
       <div className="text-3xl mb-2">{icon}</div>
       <h3 className="font-bold text-green-900 mb-1">{title}</h3>
       <p className="text-sm text-green-800/70">{description}</p>
