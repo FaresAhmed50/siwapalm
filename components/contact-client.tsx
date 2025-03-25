@@ -205,78 +205,7 @@ export default function ContactClient(){
                 </div>
             </div>
 
-            <section className="py-20 bg-green-900 text-white">
-                <div className="container mx-auto px-4">
 
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-4">{t("contact.title")}</h2>
-                        <p className="text-lg text-white/70 max-w-2xl mx-auto">{t("contact.subtitle")}</p>
-                    </div>
-
-                    <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors  ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}` }>
-                            <h3 className="text-2xl font-bold mb-4 pb-5">{t("contact.info.title")}</h3>
-                            <div className={`space-y-4 `}>
-                                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
-                                    <span className="text-green-300 text-xl">📞</span>
-                                    <span>+20 123 456 7890</span>
-                                </p>
-                                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
-                                    <span className="text-green-300 text-xl">✉️</span>
-                                    <span>info@siwapalm.com</span>
-                                </p>
-                                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
-                                    <span className="text-green-300 text-xl">📍</span>
-                                    <span>{t("contact.info.address")}</span>
-                                </p>
-                            </div>
-
-                            <div className="mt-8 ">
-                                <h4 className="text-[24px] font-bold mb-4">{t("contact.followUs")}</h4>
-                                <div className={`flex gap-4 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"} ` }>
-                                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
-                                        <Facebook className="w-5 h-5" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
-                                        <Instagram className="w-5 h-5" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
-                                        <Twitter className="w-5 h-5" />
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors">
-                            <h3 className={`text-2xl font-bold mb-4 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} `}>{t("contact.form.title")}</h3>
-                            <form className="space-y-4">
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder={t("contact.form.name")}
-                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="email"
-                                        placeholder={t("contact.form.email")}
-                                        className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
-                                    />
-                                </div>
-                                <div>
-                  <textarea
-                      placeholder={t("contact.form.message")}
-                      rows={4}
-                      className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
-                  />
-                                </div>
-                                <Button className="w-full bg-green-500 hover:bg-green-600 text-white">{t("contact.form.send")}</Button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* القسم السفلي */}
             <section className="bg-green-900 text-white py-16">
