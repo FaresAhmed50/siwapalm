@@ -104,4 +104,12 @@ html[dir="ltr"] {
   border-radius: 4px;
 }
 
+@layer utilities {
+  .focus-visible\:ring-ring:focus-visible {
+    --tw-ring-color: black !important;
+  }
+  .focus-visible\:ring-offset-2:focus-visible{
+    --tw-ring-offset-width: 0px !important;
+  }
+}
 

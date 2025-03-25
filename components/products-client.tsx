@@ -399,14 +399,14 @@ function NavLink({ children, active = false, scrolled = false, href }) {
       <Link
           href={href}
           className={cn(
-              "font-medium transition-colors hover:text-[#ad0014]",
+              "font-medium transition-colors hover:text-white",
               active
                   ? scrolled
                       ? "text-green-900"
                       : "text-black"
                   : scrolled
-                      ? "text-green-700 hover:text-[#ad0014]"
-                      : "text-black/80 hover:text-[#ad0014]",
+                      ? "text-green-700 hover:text-white"
+                      : "text-black/80 hover:text-white",
           )}
       >
         {children}

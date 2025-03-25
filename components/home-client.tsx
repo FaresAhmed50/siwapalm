@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import {useState, useEffect, useCallback} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -18,15 +18,39 @@ export default function HomeClient() {
   const [scrollY, setScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeProduct, setActiveProduct] = useState(0)
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [startX, setStartX] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [swipeOffset, setSwipeOffset] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveProduct((prev) => (prev + 1) % products.length); // Cycle through products
-    }, 5000); // Change product every 5 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, []);
-
+  // const handleTouchStart = (e) => {
+  //   setTouchStart(e.targetTouches[0].clientX);
+  // };
+  //
+  // const handleTouchMove = (e) => {
+  //   setTouchEnd(e.targetTouches[0].clientX);
+  // };
+  //
+  // const handleTouchEnd = () => {
+  //   if (!touchStart || !touchEnd) return;
+  //
+  //   // Check if swipe distance is significant enough
+  //   const threshold = 50;
+  //   const difference = touchStart - touchEnd;
+  //
+  //   if (difference > threshold) {
+  //     // Swipe left - next product
+  //     setActiveProduct((prev) => (prev === products.length - 1 ? 0 : prev + 1));
+  //   } else if (difference < -threshold) {
+  //     // Swipe right - previous product
+  //     setActiveProduct((prev) => (prev === 0 ? products.length - 1 : prev - 1));
+  //   }
+  //
+  //   // Reset touch positions
+  //   setTouchStart(0);
+  //   setTouchEnd(0);
+  // };
 
   const products = [
     {
@@ -54,6 +78,48 @@ export default function HomeClient() {
       slug: "mazaq",
     },
   ]
+
+  const handleStart = useCallback((clientX) => {
+    setStartX(clientX);
+    setIsDragging(true);
+    setSwipeOffset(0);
+  }, []);
+
+  const handleMove = useCallback((clientX) => {
+    if (!isDragging || startX === null) return;
+    const offset = clientX - startX;
+    setSwipeOffset(offset);
+  }, [isDragging, startX]);
+
+  const handleEnd = useCallback(() => {
+    if (!isDragging) return;
+
+    const threshold = 100; // Minimum swipe distance to trigger change
+    if (swipeOffset > threshold) {
+      // Swipe right - previous product
+      setActiveProduct(prev => (prev === 0 ? products.length - 1 : prev - 1));
+    } else if (swipeOffset < -threshold) {
+      // Swipe left - next product
+      setActiveProduct(prev => (prev === products.length - 1 ? 0 : prev + 1));
+    }
+
+    // Reset
+    setStartX(null);
+    setIsDragging(false);
+    setSwipeOffset(0);
+  }, [isDragging, swipeOffset, setActiveProduct, products.length]);
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveProduct((prev) => (prev + 1) % products.length); // Cycle through products
+    }, 5000); // Change product every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, []);
+
+
+
 
   const parallaxOffset = scrollY * 0.5
 
@@ -191,9 +257,9 @@ export default function HomeClient() {
                 </Button>
               </Link>
               <Link href={`/${locale}/about`}>
-              <Button variant="outline" className="border-white text-black hover:text-[#ad0014] hover:bg-white/20 text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
-                {t("hero.learnMore")}
-              </Button>
+              {/*<Button variant="outline" className="border-white text-black hover:text-[#ad0014] hover:bg-white/20 text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>*/}
+              {/*  {t("hero.learnMore")}*/}
+              {/*</Button>*/}
               </Link>
             </div>
           </motion.div>
@@ -216,77 +282,87 @@ export default function HomeClient() {
             <p className="text-lg text-green-800/70 max-w-2xl mx-auto">{t("products.subtitle")}</p>
           </div>
 
-          {/* عرض المنتجات بطريقة مبتكرة */}
-          <div className="relative h-[800px] md:h-[700px] mb-12">
-            <div className="absolute inset-0 rounded-3xl bg-green-800 " />
+          <div className="relative h-[800px] md:h-[700px] mb-12 overflow-hidden">
+            <div className="absolute inset-0 rounded-3xl bg-green-800" />
             <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_center,_transparent_30%,_rgba(0,0,0,0.4)_100%)]" />
 
-            <div className="relative h-full flex flex-col md:flex-row">
-
-              <div className="w-full md:w-full h-full  md:h-full flex flex-col md:flex-row items-center justify-center p-8">
-
-                <div className="w-1/2 h-full flex items-start justify-start p-0 md:p-8  ">
-                  <div className="relative w-full h-full ">
-                    <Image
-                        src={products[activeProduct].image || "/placeholder.svg"}
-                        alt={products[activeProduct].name}
-                        fill
-                        className="object-cover md:object-contain drop-shadow-2xl"
-                    />
-                  </div>
-                </div>
-
-                <div className={`text-white max-w-lg   ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}`}>
-                  <p className="text-green-100 text-sm uppercase tracking-wider mb-2 pt-5 md:py-0">
-                    {t("products.featured")}
-                  </p>
-                  <h3 className="text-3xl md:text-5xl font-bold mb-4">{products[activeProduct].name}</h3>
-                  <p className="text-green-100 text-lg md:text-xl mb-6">
-                    {products[activeProduct].description}
-                  </p>
-                  <div className="space-y-4 mb-8">
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-200" />
-                      <p>{t("products.feature1")}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-200" />
-                      <p>{t("products.feature2")}</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-green-200" />
-                      <p>{t("products.feature3")}</p>
-                    </div>
-                    <div className={`py-5`}>
-                      <Link href={`/${locale}/products`} className="bg-white text-black  hover:text-[#ad0014] rounded-full px-8 py-3 font-medium">
-                        {t("viewProduct")}
-                      </Link>
+            {/* Swipeable area with mouse and touch support */}
+            <div
+                className="relative h-full select-none touch-none" // Prevent text selection and browser touch actions
+                onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+                onTouchMove={(e) => handleMove(e.touches[0].clientX)}
+                onTouchEnd={handleEnd}
+                onMouseDown={(e) => handleStart(e.clientX)}
+                onMouseMove={(e) => isDragging && handleMove(e.clientX)}
+                onMouseUp={handleEnd}
+                onMouseLeave={handleEnd}
+            >
+              {/* Animated content container */}
+              <div
+                  key={activeProduct}
+                  className="absolute inset-0 flex flex-col md:flex-row transition-transform duration-300 ease-out"
+                  style={{
+                    transform: isDragging ? `translateX(${swipeOffset}px)` : '',
+                    cursor: isDragging ? 'grabbing' : 'grab'
+                  }}
+              >
+                <div className="w-full md:w-full h-full md:h-full flex flex-col md:flex-row items-center justify-center p-8 ">
+                  <div className="w-1/2 h-full flex items-start justify-start p-0 md:p-8 rounded-3xl ">
+                    <div className="relative w-full h-full rounded-3xl">
+                      <Image
+                          src={products[activeProduct].image || "/placeholder.svg"}
+                          alt={products[activeProduct].name}
+                          fill
+                          className="object-contain w-[100px] h-[300px]  md:object-contain drop-shadow-2xl transition-opacity duration-300  rounded-3xl"
+                      />
                     </div>
                   </div>
+
+                  <div className={`text-white max-w-lg ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} transition-opacity duration-300`}>
+                    <p className="text-green-100 text-sm uppercase tracking-wider mb-2 pt-5 md:py-0">
+                      {t("products.featured")}
+                    </p>
+                    <h3 className="text-3xl md:text-5xl font-bold mb-4">{products[activeProduct].name}</h3>
+                    <p className="text-green-100 text-lg md:text-xl mb-6">
+                      {products[activeProduct].description}
+                    </p>
+                    <div className="space-y-4 mb-8">
+                      {[1, 2, 3].map((i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-green-200" />
+                            <p>{t(`products.feature${i}`)}</p>
+                          </div>
+                      ))}
+                      <div className="py-5">
+                        {/*<Link href={`/${locale}/products`} className="bg-white text-green-900 hover:text-[#ad0014] rounded-full px-8 py-3 font-medium transition-colors duration-300">*/}
+                        {/*  {t("viewProduct")}*/}
+                        {/*</Link>*/}
+                        <Link href={`/${locale}/products`}>
+                          <Button className="bg-white hover:bg-green-700 hover:text-green-100  text-green-900 text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
+                            {t("viewProduct")}
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-
               </div>
-
             </div>
 
-            {/* نقاط التنقل بين المنتجات (جعلناها ثابتة) */}
-            <div className="absolute bottom-8 left-0 right-0  justify-center gap-2 hidden md:flex">
-              {products.map((product, index) => (
+            {/* Navigation dots - visible on all devices */}
+            <div className="absolute bottom-8 left-0 right-0 justify-center gap-2 flex">
+              {products.map((_, index) => (
                   <button
                       key={index}
-                      onClick={() => setActiveProduct(index)} // Update activeProduct on click
+                      onClick={() => setActiveProduct(index)}
                       className={cn(
-                          "w-3 h-3 rounded-full transition-colors cursor-pointer",
+                          "w-3 h-3 rounded-full transition-colors duration-300 cursor-pointer",
                           index === activeProduct ? "bg-white" : "bg-white/30"
                       )}
                   />
               ))}
             </div>
-
           </div>
-
-
         </div>
       </section>
 
@@ -295,18 +371,21 @@ export default function HomeClient() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-12 items-center">
             <div className="w-full md:w-1/2">
-              <div className="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden">
+              <div className="relative h-[400px] md:h-[600px] rounded-xl overflow-hidden group">
                 <Image
-                  src="/placeholder.svg?height=600&width=800"
-                  alt={t("about.farmImageAlt")}
-                  fill
-                  className="object-cover"
+                    src="/placeholder.svg?height=600&width=800"
+                    alt="Date palm trees in Siwa Oasis"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 to-transparent" />
-                <div className="absolute bottom-0 right-0 left-0 p-8">
-                  <p className="text-white text-lg font-medium">{t("about.farmLocation")}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#458a5d]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                  <div className="p-6 text-white">
+                    <h3 className="font-bold text-xl">{t("about.farmLocation")}</h3>
+                  </div>
                 </div>
               </div>
+
+
             </div>
 
             <div className="w-full md:w-1/2">
@@ -334,27 +413,26 @@ export default function HomeClient() {
               </div>
 
               <div className={`px-2 pt-3 ${locale == "en" ? "flex flex-col justify-center items-center md:justify-start md:items-start" : "flex flex-col justify-center items-center md:justify-start md:items-start"}`}>
+                <div className={`py-3`}>
+                  <Link href={`/${locale}/about`}>
+                    <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
+                      {t("nav.about")}
+                    </Button>
+                  </Link>
+                </div>
                 <div className="flex gap-4 justify-center md:justify-start">
-                  <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="text-white w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                     <Facebook className="h-5 w-5" />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <a href="#" className=" text-white w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                     <Instagram className="h-5 w-5" />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <a href="#" className="text-white w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
                     <Twitter className="h-5 w-5" />
                   </a>
                 </div>
-                <div className={`py-7`}>
-                  <Link href={`/${locale}/about`} className={`bg-white  text-black  hover:text-[#ad0014] rounded-full px-8 py-3 font-medium`}>
-                    {t("nav.about")}
-                  </Link>
-                </div>
               </div>
-
-
             </div>
-
           </div>
         </div>
       </section>
@@ -587,14 +665,14 @@ function NavLink({ children, active = false, scrolled = false, href }) {
     <Link
       href={href}
       className={cn(
-        "font-medium transition-colors hover:text-[#ad0014]",
+        "font-medium transition-colors hover:text-white",
         active
           ? scrolled
             ? "text-green-900"
             : "text-black"
           : scrolled
-          ? "text-green-700 hover:text-[#ad0014]"
-          : "text-black/80 hover:text-[#ad0014]",
+          ? "text-green-700 hover:text-white"
+          : "text-black/80 hover:text-white",
       )}
     >
       {children}
