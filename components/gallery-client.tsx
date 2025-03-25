@@ -100,17 +100,12 @@ export default function GalleryClient() {
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
             <Image
-                src="/siwa-palm-logo.png"
+                src="/header.png"
                 alt={t("logoAlt")}
                 width={40}
                 height={40}
                 className="rounded-full"
             />
-            <span
-                className={cn("font-bold text-xl transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}
-            >
-              {locale === "en" ? "Siwa Palm" : "سيوه بالم"}
-            </span>
           </div>
 
           <div className="hidden md:flex items-center gap-8  ">
@@ -149,14 +144,13 @@ export default function GalleryClient() {
           <div className="fixed inset-0 bg-green-900 z-50 flex flex-col p-6">
             <div className="flex justify-between items-center mb-12">
               <div className="flex items-center gap-2">
-                <Image
-                    src="/siwa-palm-logo.png"
-                    alt={t("logoAlt")}
-                    width={40}
-                    height={40}
-                    className="rounded-full"
+                <Image style={{ contentVisibility: 'auto' }}
+                       src="/header.png"
+                       alt={t("logoAlt")}
+                       width={40}
+                       height={40}
+                       className="rounded-full"
                 />
-                <span className="font-bold text-xl text-white">{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</span>
               </div>
               <Button className="text-white  hover:text-black hover:scale-110 transition-all duration-300"
                       variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>

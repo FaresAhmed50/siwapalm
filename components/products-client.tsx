@@ -63,18 +63,13 @@ export default function ProductsClient() {
       >
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
-            <Image
-                src="/siwa-palm-logo.png"
-                alt={t("logoAlt")}
-                width={40}
-                height={40}
-                className="rounded-full"
+            <Image style={{ contentVisibility: 'auto' }}
+                   src="/header.png"
+                   alt={t("logoAlt")}
+                   width={40}
+                   height={40}
+                   className="rounded-full"
             />
-            <span
-                className={cn("font-bold text-xl transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}
-            >
-              {locale === "en" ? "Siwa Palm" : "سيوه بالم"}
-            </span>
           </div>
 
           <div className="hidden md:flex items-center gap-8  ">
