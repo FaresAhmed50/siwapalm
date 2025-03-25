@@ -186,13 +186,13 @@ export default function OrderForm({ productName , quantity, onClose }) {
               type="button"
               variant="outline"
               onClick={onClose}
-              className="border-red-700 text-red-700 hover:bg-red-50"
+              className="border-green-300 text-green-800 hover:bg-green-200 hover:text-black"
             >
               {t("cancel")}
             </Button>
             <Button
               type="submit"
-              className="bg-gradient-to-r from-red-600 to-amber-500 hover:from-red-700 hover:to-amber-600 text-white"
+              className="bg-gradient-to-r from-green-700 to-green-600 hover:from-green-800 hover:to-green-700  text-white"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
