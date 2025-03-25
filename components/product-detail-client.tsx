@@ -182,9 +182,6 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
       )}
 
 
-
-
-
       <div className="container mx-auto px-4 pt-24">
         <Button
           variant="ghost"

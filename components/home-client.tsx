@@ -68,18 +68,19 @@ export default function HomeClient() {
       >
         <div className="flex items-center justify-between p-4">
           <div className="flex items-center gap-2">
-            <Image
+            <Image style={{ contentVisibility: 'auto' }}
               src="/siwa-palm-logo.png"
               alt={t("logoAlt")}
               width={40}
               height={40}
               className="rounded-full"
             />
-            <span
+            <h2
               className={cn("font-bold text-xl transition-colors", scrollY > 100 ? "text-green-900" : "text-white")}
+              style={{ contentVisibility: 'auto' }}
             >
               {locale === "en" ? "Siwa Palm" : "سيوه بالم"}
-            </span>
+            </h2>
           </div>
 
           <div className="hidden md:flex items-center gap-8  ">
@@ -185,19 +186,19 @@ export default function HomeClient() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6" style={{ contentVisibility: 'auto' }}>
               <span className="block">{t("hero.title1")}</span>
               <span className="text-green-300">{t("hero.title2")}</span>
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8">{t("hero.subtitle")}</p>
+            <h2 className="text-lg md:text-xl text-white/80 mb-8"  style={{ contentVisibility: 'auto' }}>{t("hero.subtitle")}</h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={`/${locale}/products`}>
-                <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8">
+                <Button className="bg-green-600 hover:bg-green-700 text-white text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
                   {t("hero.browseProducts")}
                 </Button>
               </Link>
               <Link href={`/${locale}/about`}>
-              <Button variant="outline" className="border-white text-black hover:text-[#ad0014] hover:bg-white/20 text-lg py-6 px-8">
+              <Button variant="outline" className="border-white text-black hover:text-[#ad0014] hover:bg-white/20 text-lg py-6 px-8" style={{ contentVisibility: 'auto' }}>
                 {t("hero.learnMore")}
               </Button>
               </Link>

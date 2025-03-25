@@ -4,7 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useTranslations, useLocale } from "next-intl"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import {ArrowLeft, ArrowRight, Facebook, Instagram, Twitter} from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -195,18 +195,8 @@ export default function GalleryClient() {
       )}
 
 
-
-
-
-
-
-
-
-
-
-
       {/* Hero Section */}
-      <section className="relative py-20 bg-[#458a5d]">
+      <section className="h-[60vh] relative  bg-[#458a5d] flex flex-col justify-center items-center">
         <div className="container mx-auto px-4">
           <div className="text-center text-white">
             <h1 className="text-4xl md:text-6xl font-bold mb-4">{t("title")}</h1>
@@ -278,17 +268,171 @@ export default function GalleryClient() {
             </div>
           )}
         </div>
+        <section className="py-12 text-center">
+          <Link href={`/${locale}`}>
+            <Button className="bg-[#458a5d] hover:bg-[#3a7650] text-white">
+              {locale === "ar" ? <ArrowRight className="mr-2 h-4 w-4" /> : <ArrowLeft className="mr-2 h-4 w-4" />}
+              {t("backToHome")}
+            </Button>
+          </Link>
+        </section>
+      </section>
+
+      <section className="py-20 bg-green-900 text-white">
+        <div className="container mx-auto px-4">
+
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">{t("contact.title")}</h2>
+            <p className="text-lg text-white/70 max-w-2xl mx-auto">{t("contact.subtitle")}</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors  ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}` }>
+              <h3 className="text-2xl font-bold mb-4 pb-5">{t("contact.info.title")}</h3>
+              <div className={`space-y-4 `}>
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
+                  <span className="text-green-300 text-xl">📞</span>
+                  <span>+20 123 456 7890</span>
+                </p>
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
+                  <span className="text-green-300 text-xl">✉️</span>
+                  <span>info@siwapalm.com</span>
+                </p>
+                <p className={`flex items-center gap-3 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"}`}>
+                  <span className="text-green-300 text-xl">📍</span>
+                  <span>{t("contact.info.address")}</span>
+                </p>
+              </div>
+
+              <div className="mt-8 ">
+                <h4 className="text-[24px] font-bold mb-4">{t("contact.followUs")}</h4>
+                <div className={`flex gap-4 ${locale == "en" ? "justify-center  md:justify-start" : "justify-center md:justify-start"} ` }>
+                  <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
+                    <Facebook className="w-5 h-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
+                    <Instagram className="w-5 h-5" />
+                  </Button>
+                  <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/20">
+                    <Twitter className="w-5 h-5" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 hover:bg-white/20 transition-colors">
+              <h3 className={`text-2xl font-bold mb-4 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} `}>{t("contact.form.title")}</h3>
+              <form className="space-y-4">
+                <div>
+                  <input
+                      type="text"
+                      placeholder={t("contact.form.name")}
+                      className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  />
+                </div>
+                <div>
+                  <input
+                      type="email"
+                      placeholder={t("contact.form.email")}
+                      className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  />
+                </div>
+                <div>
+                  <textarea
+                      placeholder={t("contact.form.message")}
+                      rows={4}
+                      className="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-green-400"
+                  />
+                </div>
+                <Button className="w-full bg-green-500 hover:bg-green-600 text-white">{t("contact.form.send")}</Button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* القسم السفلي */}
+      <section className="bg-green-900 text-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-10 ">
+
+            <div className="text-center md:text-left">
+              <h3 className={`text-2xl font-bold mb-6   ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} `}>{locale === "en" ? "Siwa Palm" : "سيوه بالم"}</h3>
+              <p className={`text-green-100 mb-6 w-full md:w-[70%] ${locale == 'en' ? "text-center md:text-left" : "text-center md:text-right"} `}>{t("footer.about")}</p>
+              <div className="flex gap-4 justify-center md:justify-start">
+                <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center hover:bg-green-700 transition-colors">
+                  <Twitter className="h-5 w-5" />
+                </a>
+              </div>
+            </div>
+
+            <div className={` text-center  ${locale == "en" ? "text-center" : "text-center"} ${locale == "en" ? "md:text-left" : "md:text-right"}` }>
+              <h3 className="text-2xl font-bold mb-6">{t("footer.quickLinks")}</h3>
+              <ul className="space-y-4">
+                <li>
+                  <Link href={`/${locale}`} className="text-green-100 hover:text-white transition-colors">
+                    {t("nav.home")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`/${locale}/products`} className="text-green-100 hover:text-white transition-colors">
+                    {t("nav.products")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`/${locale}/about`} className="text-green-100 hover:text-white transition-colors">
+                    {t("nav.about")}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`/${locale}/contact`} className="text-green-100 hover:text-white transition-colors">
+                    {t("nav.contact")}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div className={`text-center  ${locale == "en" ? "text-left" : "text-right"}  `}>
+              <h3 className={`text-2xl font-bold mb-6 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}`}>{t("footer.contactUs")}</h3>
+              <div className="flex justify-center md:justify-start">
+                <ul className="space-y-4 ">
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">📍</span>
+                    </div>
+                    <span className="text-green-100">Siwa Oasis, Egypt</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">📞</span>
+                    </div>
+                    <span className="text-green-100">+20 123 456 7890</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-green-800 flex items-center justify-center">
+                      <span className="text-xl">✉️</span>
+                    </div>
+                    <span className="text-green-100">info@siwapalm.com</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-green-800 mt-16 pt-8 text-center text-green-100">
+            <p>© {new Date().getFullYear()} {locale === "en" ? "Siwa Palm" : "سيوه بالم"}. {t("footer.copyright")}</p>
+          </div>
+        </div>
       </section>
 
       {/* Back to Home */}
-      <section className="py-12 text-center">
-        <Link href={`/${locale}`}>
-          <Button className="bg-[#458a5d] hover:bg-[#3a7650] text-white">
-            {locale === "ar" ? <ArrowRight className="mr-2 h-4 w-4" /> : <ArrowLeft className="mr-2 h-4 w-4" />}
-            {t("backToHome")}
-          </Button>
-        </Link>
-      </section>
+
     </div>
   )
 }

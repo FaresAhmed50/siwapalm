@@ -162,6 +162,7 @@ export default function ProductsClient() {
       {/* Hero Section */}
       <section className="relative py-32 overflow-hidden h-[70vh]">
         <div className="absolute inset-0 bg-gradient-to-r from-green-900/90 to-green-800/90 -z-10" />
+
         <div
           className="absolute inset-0 bg-[url('/date-pattern.png')] bg-repeat opacity-10 -z-10"
           style={{ backgroundSize: "200px" }}
@@ -174,8 +175,8 @@ export default function ProductsClient() {
             transition={{ duration: 0.6 }}
             className="text-center text-white max-w-3xl mx-auto"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{t("title")}</h1>
-            <p className="text-lg md:text-xl text-white/80 b-8">{t("subtitle")}</p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-green-900">{t("title")}</h1>
+            <p className="text-lg md:text-xl pb-10 b-8 text-green-800/80">{t("subtitle")}</p>
 
             <div className="relative max-w-md mx-auto py-5">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black " />
@@ -184,7 +185,7 @@ export default function ProductsClient() {
                 placeholder={t("searchPlaceholder")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 py-6 rounded-full bg-white/20   border-white/30  placeholder:text-white/60 focus:ring-2  focus-visible:ring-green-400 focus:border-transparent"
+                className="placeholder-black pl-10 py-6 rounded-full bg-white/20   border-white/30   focus:ring-2  focus-visible:ring-green-400 focus:border-transparent"
               />
             </div>
           </motion.div>

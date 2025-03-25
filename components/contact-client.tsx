@@ -128,21 +128,21 @@ export default function ContactClient(){
                 <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-sm">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <h2 className="text-2xl font-bold text-green-800 mb-4">Contact Information</h2>
+                            <h2 className={`text-2xl font-bold text-green-800 mb-4 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"}`}>Contact Information</h2>
                             <ul className="space-y-4">
-                                <li className="flex items-center gap-3">
+                                <li className={`flex items-center gap-3 ${locale == "en" ? "justify-center md:justify-start" : "justify-center md:justify-start"}` }>
                                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
                                         <span className="text-xl">📍</span>
                                     </div>
                                     <span>Siwa Oasis, Egypt</span>
                                 </li>
-                                <li className="flex items-center gap-3">
+                                <li  className={`flex items-center gap-3 ${locale == "en" ? "justify-center md:justify-start" : "justify-center md:justify-start"}` }>
                                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
                                         <span className="text-xl">📞</span>
                                     </div>
                                     <span>+20 123 456 7890</span>
                                 </li>
-                                <li className="flex items-center gap-3">
+                                <li  className={`flex items-center gap-3 ${locale == "en" ? "justify-center md:justify-start" : "justify-center md:justify-start"}` }>
                                     <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
                                         <span className="text-xl">✉️</span>
                                     </div>
@@ -150,9 +150,9 @@ export default function ContactClient(){
                                 </li>
                             </ul>
 
-                            <div className="mt-8">
+                            <div className={`mt-8 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} ` }>
                                 <h3 className="font-bold mb-2">Follow Us</h3>
-                                <div className="flex gap-4">
+                                <div className={`flex gap-4  ${locale == "en" ? "justify-center md:justify-start" : "justify-center md:justify-start"} pb-5`}>
                                     <a href="https://www.facebook.com/share/16EpBZ9Hir/?mibextid=wwXIfr" target="_blank" className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white">
                                         FB
                                     </a>
@@ -167,7 +167,7 @@ export default function ContactClient(){
                         </div>
 
                         <div>
-                            <h2 className="text-2xl font-bold text-green-800 mb-4">Send a Message</h2>
+                            <h2 className={`text-2xl font-bold text-green-800 mb-4 ${locale == "en" ? "text-center md:text-left" : "text-center md:text-right"} pb-5 `}>Send a Message</h2>
                             <form className="space-y-4">
                                 <div>
                                     <input
